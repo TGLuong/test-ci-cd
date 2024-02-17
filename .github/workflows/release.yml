@@ -10,6 +10,6 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - use: actions-rs/cargo@v1
+      - uses: actions-rs/cargo@v1
         with:
           command: check
