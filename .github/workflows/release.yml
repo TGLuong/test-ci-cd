@@ -1,5 +1,5 @@
 on:
-  push: "main"
+  push: ["main"]
 
 name: Create Release
 jobs:
