@@ -5,4 +5,5 @@ on:
 
 name: Create Release
 jobs:
-  name: Create Release
+  build:
+    name: Create Release
