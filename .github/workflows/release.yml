@@ -1,9 +1,9 @@
-on:
-  push:
-    branches:
-      - main
-
-name: Create Release
+name: hello_workfow
+on: [push]
 jobs:
-  build:
-    name: Create Release
+  print-hello:
+    run-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - run: python -c "print('Hello github action')"
