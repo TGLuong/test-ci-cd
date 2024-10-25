@@ -21,12 +21,17 @@ jobs:
           destination-dir: "v0.1.0"
           output-file-url: true
           public: true
+      - uses: SebRollen/toml-action@v1.2.0
+        id: read_toml
+        with:
+          file: 'Cargo.toml'
+          field: 'version'
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.run_number }}
-          release_name: ${{ github.run_number }}
+          tag_name: ${{ steps.read_toml.outputs.value }}
+          release_name: ${{ steps.read_toml.outputs.value }}
           body: ${{ steps.upload.outputs.file-url }}
           draft: false
           prerelease: false
