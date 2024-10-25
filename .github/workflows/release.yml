@@ -20,21 +20,12 @@ jobs:
           destination-dir: "v0.1.0"
           output-file-url: true
           public: true
-      - run: echo 'FILE_NAME=${{ steps.upload.outputs.file-url }}' >> $GITHUB_ENV
-  release:
-    name: Create Release
-    permissions: write-all
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-      - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.run_number }}
           release_name: ${{ github.run_number }}
-          body: echo '$FILE_NAME'
+          body: ${{ steps.upload.outputs.file-url }}
           draft: false
           prerelease: false
