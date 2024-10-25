@@ -19,5 +19,4 @@ jobs:
           bucket-root: 'test-cicd'
           destination-dir: "v0.1.0"
           output-file-url: true
-          public: true
       - run: echo '${{ steps.upload.outputs.file-url }}'
