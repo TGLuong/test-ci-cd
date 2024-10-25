@@ -8,6 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: cargo build --release
+      - uses: SebRollen/toml-action@v1.2.0
+        id: read_toml
+        with:
+          file: 'Cargo.toml'
+          field: 'package.version'
       - uses: hkusu/s3-upload-action@v2
         id: upload
         name: upload to s3
@@ -18,20 +23,15 @@ jobs:
           aws-bucket: luongtg-bucket
           file-path: 'target/release/cicd'
           bucket-root: 'test-cicd'
-          destination-dir: "v0.1.0"
+          destination-dir: "v${{ steps.read_toml.outputs.value }}"
           output-file-url: true
           public: true
-      - uses: SebRollen/toml-action@v1.2.0
-        id: read_toml
-        with:
-          file: 'Cargo.toml'
-          field: 'package.version'
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.read_toml.outputs.value }}
-          release_name: ${{ steps.read_toml.outputs.value }}
-          body: ${{ steps.upload.outputs.file-url }}
+          tag_name: v${{ steps.read_toml.outputs.value }}
+          release_name: v${{ steps.read_toml.outputs.value }}
+          body: "Link download: ${{ steps.upload.outputs.file-url }}"
           draft: false
           prerelease: false
