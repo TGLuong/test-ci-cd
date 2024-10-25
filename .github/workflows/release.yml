@@ -23,6 +23,7 @@ jobs:
       - run: echo 'FILE_NAME=${{ steps.upload.outputs.file-url }}' >> $GITHUB_ENV
   release:
     name: Create Release
+    permissions: write-all
     runs-on: ubuntu-latest
     needs: build
     steps:
